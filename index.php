@@ -2,41 +2,42 @@
 <html lang="en">
 
 <head>
-
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Plantora | Bring Nature Home</title>
 
-    <link rel="stylesheet" href="css/style.css">
+    <!-- IMPORTANT: CSS FILE -->
+    <link rel="stylesheet" href="css/style.css?v=2">
 
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+    <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
 </head>
-
 
 <body>
 
-
 <!-- =========================================================
-     TOP ANNOUNCEMENT BAR
+     TOP BAR
 ========================================================= -->
 
 <div class="top-bar">
 
-    <div class="top-message">
+    <div>
         🌿 Bring Nature Into Your Home with Plantora
     </div>
 
-    <div class="top-delivery">
+    <div>
         🚚 Free Delivery on orders over Rs. 5000
     </div>
 
-    <div class="top-links">
+    <div>
         Help Center &nbsp; | &nbsp; Track Order &nbsp; | &nbsp; FAQs
     </div>
 
 </div>
-
 
 
 <!-- =========================================================
@@ -49,54 +50,108 @@
 
     <a href="index.php" class="logo">
 
-        <span class="logo-icon">🌿</span>
-
-        <span class="logo-text">
-
-            Plantora
-
-            <small>Bring Nature Home</small>
-
-        </span>
+        <img src="images/logo.png"
+             alt="Plantora - Bring Nature Home">
 
     </a>
-
-
-    <!-- MOBILE MENU BUTTON -->
-
-    <button class="menu-button" onclick="toggleMenu()">
-        ☰
-    </button>
 
 
     <!-- NAVIGATION -->
 
     <nav class="navbar" id="navbar">
 
-        <a href="index.php" class="active">
-            Home
+    <a href="index.php" class="active">Home</a>
+
+    <!-- INDOOR PLANTS DROPDOWN -->
+    <div class="nav-dropdown">
+
+        <a href="shop.php" class="dropdown-title">
+            Indoor Plants <span class="arrow">⌄</span>
         </a>
 
-        <a href="shop.php">
-            Indoor Plants
+        <div class="dropdown-menu">
+
+            <a href="shop.php?category=low-light">
+                🌿 Low-Light Plants
+            </a>
+
+            <a href="shop.php?category=air-purifying">
+                🌱 Air-Purifying Plants
+            </a>
+
+            <a href="shop.php?category=easy-care">
+                🪴 Easy-Care Plants
+            </a>
+
+            <a href="shop.php?category=flowering">
+                🌸 Flowering Plants
+            </a>
+
+            <a href="shop.php?category=foliage">
+                🍃 Foliage Plants
+            </a>
+
+            <a href="shop.php?category=cacti-succulents">
+                🌵 Cacti & Succulents
+            </a>
+
+        </div>
+
+    </div>
+
+   <!-- POTS DROPDOWN -->
+<div class="nav-dropdown">
+
+    <a href="shop.php?category=pots" class="dropdown-title">
+        Pots <span class="arrow">⌄</span>
+    </a>
+
+    <div class="dropdown-menu">
+
+        <a href="shop.php?category=plastic-pots">
+            🪴 Plastic Pots
         </a>
 
-        <a href="shop.php?category=pots">
-            Pots
+        <a href="shop.php?category=terracotta-clay-pots">
+            🏺 Terracotta & Clay Pots
         </a>
 
-        <a href="shop.php?category=packages">
-            Gift Packages
+        <a href="shop.php?category=glazed-ceramic-pots">
+            🏺 Glazed Ceramic Pots
         </a>
 
-        <a href="#">
-            Care & Tips
+        <a href="shop.php?category=fiberglass-fiber-clay">
+            🪴 Fiberglass & Fiber Clay
         </a>
 
-    </nav>
+        <a href="shop.php?category=cement-stone">
+            🪨 Cement & Stone
+        </a>
+
+    </div>
+
+</div>
+
+    <a href="shop.php?category=packages">
+        Gift Packages
+    </a>
+
+    <a href="care.php">
+        Care & Tips
+    </a>
+
+    <a href="about.php">
+        About Us
+    </a>
+
+    <a href="contact.php">
+        Contact Us
+    </a>
+
+</nav>
 
 
-    <!-- HEADER ACTIONS -->
+    <!-- SEARCH + LOGIN + CART -->
 
     <div class="header-actions">
 
@@ -107,7 +162,7 @@
                 placeholder="Search plants..."
             >
 
-            <button>
+            <button type="button">
                 🔍
             </button>
 
@@ -115,11 +170,7 @@
 
 
         <a href="login.php" class="login-link">
-
-            <span>♙</span>
-
-            Login
-
+            ♙ Login
         </a>
 
 
@@ -145,61 +196,45 @@
 
 <section class="hero">
 
+    <img
+        src="images/hero-banner.jpeg"
+        alt="Beautiful indoor plants"
+        class="hero-image"
+    >
+
+
+    <div class="hero-overlay"></div>
+
+
     <div class="hero-content">
 
-        <span class="hero-small-title">
+        <p class="hero-small">
             WELCOME TO PLANTORA
-        </span>
-
+        </p>
 
         <h1>
-
-            Bring Nature
-
-            <br>
-
+            Bring Nature<br>
             Into Your Home
-
         </h1>
 
-
-        <p>
-
-            Discover beautiful indoor plants, stylish pots
-            and thoughtful gift packages to create a
-            greener and happier space.
-
+        <p class="hero-description">
+            Beautiful indoor plants, stylish pots and
+            thoughtful gift packages to create a greener
+            and happier space.
         </p>
 
 
         <div class="hero-buttons">
 
-            <a href="shop.php" class="btn primary-btn">
-
-                Shop Now
-
-                <span>→</span>
-
+            <a href="shop.php" class="btn-primary">
+                Shop Now 🛒
             </a>
 
-
-            <a href="shop.php" class="btn secondary-btn">
-
-                Explore Plants
-
+            <a href="shop.php" class="btn-secondary">
+                Explore Plants 🌿
             </a>
 
         </div>
-
-    </div>
-
-
-    <div class="hero-image">
-
-        <img
-            src="images/hero.jpeg"
-            alt="Beautiful Indoor Plants"
-        >
 
     </div>
 
@@ -208,90 +243,62 @@
 
 
 <!-- =========================================================
-     SERVICE FEATURES
+     BENEFITS
 ========================================================= -->
 
-<section class="features">
+<section class="benefits">
 
-    <div class="feature">
+    <div class="benefit">
 
-        <div class="feature-icon">
+        <div class="benefit-icon">
             🚚
         </div>
 
         <div>
-
-            <h3>
-                Free Delivery
-            </h3>
-
-            <p>
-                On orders over Rs. 5000
-            </p>
-
+            <h3>Free Delivery</h3>
+            <p>On orders over Rs. 5000</p>
         </div>
 
     </div>
 
 
-    <div class="feature">
+    <div class="benefit">
 
-        <div class="feature-icon">
+        <div class="benefit-icon">
             🛡️
         </div>
 
         <div>
-
-            <h3>
-                Secure Payment
-            </h3>
-
-            <p>
-                Safe & secure checkout
-            </p>
-
+            <h3>Secure Payment</h3>
+            <p>100% secure checkout</p>
         </div>
 
     </div>
 
 
-    <div class="feature">
+    <div class="benefit">
 
-        <div class="feature-icon">
+        <div class="benefit-icon">
             🌿
         </div>
 
         <div>
-
-            <h3>
-                Quality Plants
-            </h3>
-
-            <p>
-                Carefully selected plants
-            </p>
-
+            <h3>Quality Plants</h3>
+            <p>Carefully selected</p>
         </div>
 
     </div>
 
 
-    <div class="feature">
+    <div class="benefit">
 
-        <div class="feature-icon">
+        <div class="benefit-icon">
             🎧
         </div>
 
         <div>
-
-            <h3>
-                Customer Support
-            </h3>
-
-            <p>
-                We're here to help
-            </p>
-
+            <h3>Customer Support</h3>
+            <p>We're here to help</p>
         </div>
 
     </div>
@@ -304,26 +311,17 @@
      SHOP BY CATEGORY
 ========================================================= -->
 
-<section class="categories-section">
+<section class="section">
 
     <div class="section-heading">
 
-        <div>
+        <p>EXPLORE OUR COLLECTION</p>
 
-            <span class="section-label">
-                EXPLORE OUR COLLECTION
-            </span>
+        <h2>
+            Shop by Category
+        </h2>
 
-            <h2>
-                Shop by Category
-            </h2>
-
-        </div>
-
-
-        <a href="shop.php" class="view-all">
-            View All →
-        </a>
+        <span>🌿</span>
 
     </div>
 
@@ -331,241 +329,121 @@
     <div class="category-grid">
 
 
-        <a
-            href="shop.php?category=low-light"
-            class="category-card"
-        >
+        <a href="shop.php?category=low-light" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/low_light.jpeg"
-                    alt="Low-Light Plants"
-                >
-
+                <img src="images/categories/low_light.jpeg"
+                     alt="Low Light Plants">
             </div>
 
-            <div class="category-info">
+            <h3>Low-Light Plants</h3>
 
-                <h3>
-                    Low-Light Plants
-                </h3>
-
-                <p>
-                    Easy indoor plants
-                </p>
-
-            </div>
+            <p>Perfect for low light</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=air-purifying"
-            class="category-card"
-        >
+        <a href="shop.php?category=air-purifying" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/air_purifying.jpeg"
-                    alt="Air Purifying Plants"
-                >
-
+                <img src="images/categories/air_purifying.jpeg"
+                     alt="Air Purifying Plants">
             </div>
 
-            <div class="category-info">
+            <h3>Air-Purifying</h3>
 
-                <h3>
-                    Air-Purifying
-                </h3>
-
-                <p>
-                    Freshen your space
-                </p>
-
-            </div>
+            <p>Fresh air naturally</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=easy-care"
-            class="category-card"
-        >
+        <a href="shop.php?category=easy-care" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/easy_care.jpeg"
-                    alt="Easy Care Plants"
-                >
-
+                <img src="images/categories/easy_care.jpeg"
+                     alt="Easy Care Plants">
             </div>
 
-            <div class="category-info">
+            <h3>Easy-Care Plants</h3>
 
-                <h3>
-                    Easy-Care Plants
-                </h3>
-
-                <p>
-                    Perfect for beginners
-                </p>
-
-            </div>
+            <p>Perfect for beginners</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=flowering"
-            class="category-card"
-        >
+        <a href="shop.php?category=flowering" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/flowering.jpeg"
-                    alt="Flowering Plants"
-                >
-
+                <img src="images/categories/flowering.jpeg "
+                     alt="Flowering Plants">
             </div>
 
-            <div class="category-info">
+            <h3>Flowering Plants</h3>
 
-                <h3>
-                    Flowering Plants
-                </h3>
-
-                <p>
-                    Add natural beauty
-                </p>
-
-            </div>
+            <p>Add colour to your home</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=foliage"
-            class="category-card"
-        >
+        <a href="shop.php?category=foliage" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/foliage.jpeg"
-                    alt="Foliage Plants"
-                >
-
+                <img src="images/categories/foliage.jpeg"
+                     alt="Foliage Plants">
             </div>
 
-            <div class="category-info">
+            <h3>Foliage Plants</h3>
 
-                <h3>
-                    Foliage Plants
-                </h3>
-
-                <p>
-                    Beautiful green leaves
-                </p>
-
-            </div>
+            <p>Beautiful green leaves</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=cacti"
-            class="category-card"
-        >
+        <a href="shop.php?category=cactus" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/cacti.jpeg"
-                    alt="Cacti and Succulents"
-                >
-
+                <img src="images/categories/cacti.jpeg"
+                     alt="Cacti and Succulents">
             </div>
 
-            <div class="category-info">
+            <h3>Cacti & Succulents</h3>
 
-                <h3>
-                    Cacti & Succulents
-                </h3>
-
-                <p>
-                    Small & stylish
-                </p>
-
-            </div>
+            <p>Small plants, big style</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=pots"
-            class="category-card"
-        >
+        <a href="shop.php?category=pots" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/pots.jpeg"
-                    alt="Plant Pots"
-                >
-
+                <img src="images/categories/pots.jpeg"
+                     alt="Plant Pots">
             </div>
 
-            <div class="category-info">
+            <h3>Pots</h3>
 
-                <h3>
-                    Pots
-                </h3>
-
-                <p>
-                    Stylish plant pots
-                </p>
-
-            </div>
+            <p>Stylish pots for your plants</p>
 
         </a>
 
 
 
-        <a
-            href="shop.php?category=packages"
-            class="category-card"
-        >
+        <a href="shop.php?category=packages" class="category-card">
 
             <div class="category-image">
-
-                <img
-                    src="images/categories/gift_packages.jpeg"
-                    alt="Gift Packages"
-                >
-
+                <img src="images/categories/gift_packages.jpeg"
+                     alt="Gift Packages">
             </div>
 
-            <div class="category-info">
+            <h3>Gift Packages</h3>
 
-                <h3>
-                    Gift Packages
-                </h3>
-
-                <p>
-                    Gifts for plant lovers
-                </p>
-
-            </div>
+            <p>Give the gift of greenery</p>
 
         </a>
 
@@ -579,15 +457,15 @@
      BEST SELLING PLANTS
 ========================================================= -->
 
-<section class="products-section">
+<section class="section best-selling">
 
-    <div class="section-heading">
+    <div class="section-title-row">
 
         <div>
 
-            <span class="section-label">
+            <p class="section-label">
                 CUSTOMER FAVOURITES
-            </span>
+            </p>
 
             <h2>
                 Best Selling Plants
@@ -603,6 +481,7 @@
     </div>
 
 
+
     <div class="product-grid">
 
 
@@ -612,26 +491,26 @@
 
             <div class="product-image">
 
-                <img
-                    src="images/products/snake-plant.jpeg"
-                    alt="Snake Plant"
-                >
+                <span class="product-badge">
+                    Bestseller
+                </span>
 
                 <button class="wishlist">
                     ♡
                 </button>
 
-                <span class="product-badge">
-                    Bestseller
-                </span>
+                <img
+                    src="images/products/snake-plant.jpeg"
+                    alt="Snake Plant"
+                >
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
-                    Air-Purifying Plant
+                <p class="product-type">
+                    Air Purifying Plant
                 </p>
 
                 <h3>
@@ -640,9 +519,7 @@
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (128)
-                    </span>
+                    <span>(128)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -651,9 +528,9 @@
                         Rs. 2,990
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -669,21 +546,21 @@
 
             <div class="product-image">
 
+                <button class="wishlist">
+                    ♡
+                </button>
+
                 <img
                     src="images/products/peace-lily.jpeg"
                     alt="Peace Lily"
                 >
-
-                <button class="wishlist">
-                    ♡
-                </button>
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
+                <p class="product-type">
                     Low-Light Plant
                 </p>
 
@@ -693,9 +570,7 @@
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (96)
-                    </span>
+                    <span>(96)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -704,9 +579,9 @@
                         Rs. 3,990
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -722,21 +597,21 @@
 
             <div class="product-image">
 
+                <button class="wishlist">
+                    ♡
+                </button>
+
                 <img
                     src="images/products/zz-plant.jpeg"
                     alt="ZZ Plant"
                 >
-
-                <button class="wishlist">
-                    ♡
-                </button>
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
+                <p class="product-type">
                     Easy-Care Plant
                 </p>
 
@@ -746,9 +621,7 @@
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (87)
-                    </span>
+                    <span>(87)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -757,9 +630,9 @@
                         Rs. 3,490
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -775,26 +648,22 @@
 
             <div class="product-image">
 
-                <img
-                    src="images/products/monstera.jpeg"
-                    alt="Monstera"
-                >
-
                 <button class="wishlist">
                     ♡
                 </button>
 
-                <span class="product-badge">
-                    Popular
-                </span>
+                <img
+                    src="images/products/monstera.jpeg"
+                    alt="Monstera"
+                >
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
-                    Foliage Plant
+                <p class="product-type">
+                    Indoor Foliage Plant
                 </p>
 
                 <h3>
@@ -803,9 +672,7 @@
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (112)
-                    </span>
+                    <span>(112)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -814,9 +681,9 @@
                         Rs. 5,990
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -832,33 +699,31 @@
 
             <div class="product-image">
 
+                <button class="wishlist">
+                    ♡
+                </button>
+
                 <img
                     src="images/products/pothos.jpeg"
                     alt="Pothos"
                 >
-
-                <button class="wishlist">
-                    ♡
-                </button>
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
-                    Air-Purifying Plant
+                <p class="product-type">
+                    Air Purifying Plant
                 </p>
 
                 <h3>
-                    Golden Pothos
+                    Pothos
                 </h3>
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (134)
-                    </span>
+                    <span>(134)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -867,9 +732,9 @@
                         Rs. 1,990
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -885,22 +750,22 @@
 
             <div class="product-image">
 
+                <button class="wishlist">
+                    ♡
+                </button>
+
                 <img
                     src="images/products/aloe-vera.jpeg"
                     alt="Aloe Vera"
                 >
-
-                <button class="wishlist">
-                    ♡
-                </button>
 
             </div>
 
 
             <div class="product-info">
 
-                <p class="product-category">
-                    Easy-Care Plant
+                <p class="product-type">
+                    Medicinal Plant
                 </p>
 
                 <h3>
@@ -909,9 +774,7 @@
 
                 <div class="rating">
                     ★★★★★
-                    <span>
-                        (75)
-                    </span>
+                    <span>(75)</span>
                 </div>
 
                 <div class="product-bottom">
@@ -920,9 +783,9 @@
                         Rs. 2,490
                     </strong>
 
-                    <button class="add-cart">
+                    <a href="cart.php" class="add-cart">
                         🛒
-                    </button>
+                    </a>
 
                 </div>
 
@@ -937,16 +800,16 @@
 
 
 <!-- =========================================================
-     OUR MISSION
+     MISSION
 ========================================================= -->
 
-<section class="mission-section">
+<section class="mission-section" id="about">
 
     <div class="mission-image">
 
         <img
             src="images/mission.jpeg"
-            alt="Plantora Mission"
+            alt="Green indoor living space"
         >
 
     </div>
@@ -954,32 +817,29 @@
 
     <div class="mission-content">
 
-        <span class="section-label">
+        <p class="mission-label">
             OUR MISSION
-        </span>
+        </p>
 
         <h2>
             Bringing More Green
+            <br>
             Into Everyday Life
         </h2>
 
         <p>
-
             At Plantora, our mission is to make it easy for
-            everyone to bring the beauty and benefits of nature
-            into their homes.
-
+            everyone to bring the beauty and benefits of
+            nature into their homes.
         </p>
 
         <p>
-
             We carefully select quality indoor plants and
-            provide the knowledge you need to help them grow
-            beautifully.
-
+            provide the knowledge you need to help them
+            grow beautifully.
         </p>
 
-        <a href="#" class="text-button">
+        <a href="#about" class="mission-link">
             Learn More About Us →
         </a>
 
@@ -995,22 +855,25 @@
 
 <section class="why-section">
 
-    <div class="section-title">
+    <div class="section-heading">
 
-        <span class="section-label">
+        <p>
             WHY PLANTORA?
-        </span>
+        </p>
 
         <h2>
             More Than Just Plants
         </h2>
 
-        <p>
+        <span>🌿</span>
+
+        <div class="heading-description">
             Everything you need to create a greener,
             healthier and happier space.
-        </p>
+        </div>
 
     </div>
+
 
 
     <div class="why-grid">
@@ -1034,6 +897,7 @@
         </div>
 
 
+
         <div class="why-card">
 
             <div class="why-icon">
@@ -1052,10 +916,11 @@
         </div>
 
 
+
         <div class="why-card">
 
             <div class="why-icon">
-                💚
+                🪴
             </div>
 
             <h3>
@@ -1063,11 +928,12 @@
             </h3>
 
             <p>
-                Get useful care tips to help your plants
-                stay healthy and beautiful.
+                Get useful care tips to help your
+                plants stay healthy and beautiful.
             </p>
 
         </div>
+
 
 
         <div class="why-card">
@@ -1099,17 +965,18 @@
 
 <section class="reviews-section">
 
-    <div class="section-title">
+    <div class="section-heading">
 
-        <span class="section-label">
+        <p>
             HAPPY PLANT PARENTS
-        </span>
+        </p>
 
         <h2>
             What Our Customers Say
         </h2>
 
     </div>
+
 
 
     <div class="reviews-grid">
@@ -1122,17 +989,16 @@
             </div>
 
             <p>
-
                 "The plant arrived healthy and beautifully
-                packed. It looks perfect in my living room!"
-
+                packaged. It looks perfect in my living room!"
             </p>
 
-            <h4>
+            <strong>
                 — Nadeesha
-            </h4>
+            </strong>
 
         </div>
+
 
 
         <div class="review-card">
@@ -1142,17 +1008,16 @@
             </div>
 
             <p>
-
                 "Great quality plants and very helpful
                 customer service. I will definitely order again."
-
             </p>
 
-            <h4>
+            <strong>
                 — Kavindu
-            </h4>
+            </strong>
 
         </div>
+
 
 
         <div class="review-card">
@@ -1162,15 +1027,101 @@
             </div>
 
             <p>
-
                 "I bought a gift package for my friend.
                 The packaging was beautiful!"
-
             </p>
 
-            <h4>
+            <strong>
                 — Amaya
-            </h4>
+            </strong>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+
+<!-- =========================================================
+     PLANT CARE
+========================================================= -->
+
+<section class="care-section" id="care">
+
+    <div class="care-content">
+
+        <p class="section-label">
+            PLANT CARE GUIDE
+        </p>
+
+        <h2>
+            Keep Your Plants
+            <br>
+            Happy & Healthy 🌿
+        </h2>
+
+        <p>
+            Learn simple plant-care tips to help your
+            indoor plants grow beautifully.
+        </p>
+
+        <a href="#" class="btn-primary">
+            Explore Care Tips →
+        </a>
+
+    </div>
+
+
+    <div class="care-cards">
+
+        <div class="care-card">
+
+            <div>
+                💧
+            </div>
+
+            <h3>
+                Watering
+            </h3>
+
+            <p>
+                Water according to your plant's needs.
+            </p>
+
+        </div>
+
+
+        <div class="care-card">
+
+            <div>
+                ☀️
+            </div>
+
+            <h3>
+                Light
+            </h3>
+
+            <p>
+                Give your plant the right amount of sunlight.
+            </p>
+
+        </div>
+
+
+        <div class="care-card">
+
+            <div>
+                🌱
+            </div>
+
+            <h3>
+                Soil & Repotting
+            </h3>
+
+            <p>
+                Use suitable soil and enough growing space.
+            </p>
 
         </div>
 
@@ -1186,37 +1137,35 @@
 
 <section class="newsletter">
 
-    <div class="newsletter-content">
+    <div class="newsletter-icon">
+        ✉️
+    </div>
 
-        <span>
-            STAY CONNECTED WITH PLANTORA
-        </span>
+    <div>
 
         <h2>
-            Get Plant Care Tips & Special Offers
+            Join the Plantora Family!
         </h2>
 
         <p>
-            Subscribe to receive helpful plant care tips,
-            new arrivals and special offers.
+            Get the latest offers, new arrivals and plant care tips.
         </p>
 
-
-        <form class="newsletter-form">
-
-            <input
-                type="email"
-                placeholder="Enter your email address"
-                required
-            >
-
-            <button type="submit">
-                Subscribe
-            </button>
-
-        </form>
-
     </div>
+
+
+    <form class="newsletter-form">
+
+        <input
+            type="email"
+            placeholder="Enter your email address"
+        >
+
+        <button type="submit">
+            Subscribe
+        </button>
+
+    </form>
 
 </section>
 
@@ -1226,38 +1175,39 @@
      FOOTER
 ========================================================= -->
 
-<footer class="footer">
+<footer class="footer" id="contact">
+
+    <div class="footer-leaf watermark">
+        🌿
+    </div>
 
 
-    <div class="footer-main">
+    <div class="footer-grid">
 
 
-        <!-- ABOUT -->
+        <!-- BRAND -->
 
-        <div class="footer-column footer-about">
+        <div class="footer-brand">
 
-            <a href="index.php" class="footer-logo">
-
-                🌿 Plantora
-
-            </a>
+            <img
+                src="images/logo.png"
+                alt="Plantora Logo"
+                class="footer-logo"
+            >
 
             <p>
-
-                Bringing beautiful indoor plants,
-                stylish pots and thoughtful gifts
-                closer to you.
-
+                Beautiful indoor plants, stylish pots
+                and thoughtful gift packages to
+                greenify your space.
             </p>
 
 
-            <div class="social-links">
+            <div class="social-icons">
 
                 <a href="#">f</a>
-
                 <a href="#">◎</a>
-
-                <a href="#">in</a>
+                <a href="#">♪</a>
+                <a href="#">▶</a>
 
             </div>
 
@@ -1278,7 +1228,7 @@
             </a>
 
             <a href="shop.php">
-                Indoor Plants
+                Plants
             </a>
 
             <a href="shop.php?category=pots">
@@ -1287,6 +1237,14 @@
 
             <a href="shop.php?category=packages">
                 Gift Packages
+            </a>
+
+            <a href="#about">
+                About Us
+            </a>
+
+            <a href="#contact">
+                Contact
             </a>
 
         </div>
@@ -1302,19 +1260,27 @@
             </h3>
 
             <a href="#">
-                Contact Us
+                Help Center
             </a>
 
             <a href="#">
-                Care & Tips
-            </a>
-
-            <a href="#">
-                Delivery Information
+                Track Order
             </a>
 
             <a href="#">
                 FAQs
+            </a>
+
+            <a href="#">
+                Returns & Refunds
+            </a>
+
+            <a href="#">
+                Privacy Policy
+            </a>
+
+            <a href="#">
+                Terms & Conditions
             </a>
 
         </div>
@@ -1330,23 +1296,23 @@
             </h3>
 
             <p>
-                📍 Matara, Sri Lanka
+                📍 123 Green Street,
+                Colombo, Sri Lanka
             </p>
 
             <p>
-                ☎ +94 77 123 4567
+                📞 +94 71 234 5678
             </p>
 
             <p>
-                ✉ hello@plantora.lk
+                ✉️ support@plantora.com
             </p>
 
             <p>
-                🕐 Mon - Sat: 9:00 AM - 6:00 PM
+                🕘 Mon - Sun: 9:00 AM - 9:00 PM
             </p>
 
         </div>
-
 
     </div>
 
@@ -1354,44 +1320,22 @@
     <div class="footer-bottom">
 
         <p>
-            © 2026 Plantora. All Rights Reserved.
+            © 2026 Plantora. All rights reserved.
         </p>
 
-        <div>
-
-            <a href="#">
-                Privacy Policy
-            </a>
-
-            <a href="#">
-                Terms & Conditions
-            </a>
-
-        </div>
+        <p>
+            Bring Nature Home 🌿
+        </p>
 
     </div>
 
 </footer>
-
-
-
-<!-- =========================================================
-     JAVASCRIPT
-========================================================= -->
-
 <script>
-
 function toggleMenu() {
-
     const navbar = document.getElementById("navbar");
-
     navbar.classList.toggle("show");
-
 }
-
 </script>
 
-
 </body>
-
 </html>
