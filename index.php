@@ -2,19 +2,25 @@
 <html lang="en">
 
 <head>
+
     <meta charset="UTF-8">
 
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
     <title>Plantora | Bring Nature Home</title>
 
-    <!-- IMPORTANT: CSS FILE -->
     <link rel="stylesheet" href="css/style.css?v=2">
 
     <link rel="preconnect" href="https://fonts.googleapis.com">
+
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
     <link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Playfair+Display:wght@600;700&display=swap" rel="stylesheet">
+
+    <!-- Font Awesome Icons -->
+    <link rel="stylesheet"
+          href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
 </head>
 
 <body>
@@ -248,10 +254,11 @@
 
 <section class="benefits">
 
+    <!-- FREE DELIVERY -->
     <div class="benefit">
 
         <div class="benefit-icon">
-            🚚
+            <i class="fa-solid fa-truck-fast"></i>
         </div>
 
         <div>
@@ -262,10 +269,11 @@
     </div>
 
 
+    <!-- SECURE PAYMENT -->
     <div class="benefit">
 
         <div class="benefit-icon">
-            🛡️
+            <i class="fa-solid fa-shield-halved"></i>
         </div>
 
         <div>
@@ -276,10 +284,11 @@
     </div>
 
 
+    <!-- QUALITY PLANTS -->
     <div class="benefit">
 
         <div class="benefit-icon">
-            🌿
+            <i class="fa-solid fa-leaf"></i>
         </div>
 
         <div>
@@ -290,10 +299,11 @@
     </div>
 
 
+    <!-- CUSTOMER SUPPORT -->
     <div class="benefit">
 
         <div class="benefit-icon">
-            🎧
+            <i class="fa-solid fa-headset"></i>
         </div>
 
         <div>
@@ -865,7 +875,6 @@
             More Than Just Plants
         </h2>
 
-        <span>🌿</span>
 
         <div class="heading-description">
             Everything you need to create a greener,
@@ -879,81 +888,69 @@
     <div class="why-grid">
 
 
-        <div class="why-card">
+      <div class="why-card">
 
-            <div class="why-icon">
-                🌱
-            </div>
+        <div class="why-icon">
+            <i class="fa-solid fa-seedling"></i>
+        </div>
 
-            <h3>
-                Healthy Plants
-            </h3>
+        <h3>Healthy Plants</h3>
 
-            <p>
-                Every plant is carefully selected and
-                prepared before reaching your home.
-            </p>
+        <p>
+        Every plant is carefully selected and
+        prepared before reaching your home.
+        </p>
 
         </div>
 
 
-
         <div class="why-card">
 
-            <div class="why-icon">
-                📦
+         <div class="why-icon">
+                <i class="fa-solid fa-box-open"></i>
             </div>
 
-            <h3>
-                Safe Packaging
-            </h3>
+            <h3>Safe Packaging</h3>
 
-            <p>
-                Our plants are packed carefully to
-                ensure they arrive safely.
-            </p>
+    <p>
+        Our plants are packed carefully to
+        ensure they arrive safely.
+    </p>
 
         </div>
 
 
-
         <div class="why-card">
 
-            <div class="why-icon">
-                🪴
-            </div>
-
-            <h3>
-                Plant Care Support
-            </h3>
-
-            <p>
-                Get useful care tips to help your
-                plants stay healthy and beautiful.
-            </p>
-
-        </div>
-
-
-
-        <div class="why-card">
-
-            <div class="why-icon">
-                🚚
-            </div>
-
-            <h3>
-                Reliable Delivery
-            </h3>
-
-            <p>
-                We make sure your order reaches you
-                safely and on time.
-            </p>
-
-        </div>
-
+    <div class="why-icon">
+        <i class="fa-solid fa-hand-holding-heart"></i>
     </div>
+
+    <h3>Plant Care Support</h3>
+
+    <p>
+        Get useful care tips to help your
+        plants stay healthy and beautiful.
+    </p>
+
+</div>
+
+
+
+        <div class="why-card">
+
+    <div class="why-icon">
+        <i class="fa-solid fa-truck"></i>
+    </div>
+
+    <h3>Reliable Delivery</h3>
+
+    <p>
+        We make sure your order reaches you
+        safely and on time.
+    </p>
+
+</div>
 
 </section>
 

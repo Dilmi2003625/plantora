@@ -470,8 +470,8 @@ input {
 
 
 .benefit-icon {
-    width: 45px;
-    height: 45px;
+    width: 48px;
+    height: 48px;
 
     flex-shrink: 0;
 
@@ -483,22 +483,31 @@ input {
     align-items: center;
     justify-content: center;
 
-    font-size: 21px;
+    color: #176b36;
+
+    font-size: 20px;
+
+    transition: 0.3s ease;
+}
+
+
+.benefit:hover .benefit-icon {
+    background: #176b36;
+    color: #ffffff;
+
+    transform: translateY(-2px);
 }
 
 
 .benefit h3 {
     font-size: 15px;
-
     margin-bottom: 2px;
-
     color: #173b25;
 }
 
 
 .benefit p {
     font-size: 11px;
-
     color: #7a817b;
 }
 
@@ -2092,6 +2101,601 @@ input {
     .dropdown-menu a:hover {
 
         padding-left: 25px;
+    }
+
+}
+
+/* =========================================================
+   WHY CHOOSE - ICONS
+========================================================= */
+
+.why-icon {
+    width: 55px;
+    height: 55px;
+
+    margin: 0 auto 15px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #edf5ed;
+
+    color: #176b36;
+
+    font-size: 23px;
+
+    transition: all 0.3s ease;
+}
+
+.why-card:hover .why-icon {
+    background: #176b36;
+
+    color: #ffffff;
+
+    transform: translateY(-4px);
+}
+
+
+
+/* =========================================================
+   PLANT CARE ICONS
+========================================================= */
+
+.care-icon {
+    width: 48px;
+    height: 48px;
+
+    margin: 0 auto 12px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 50%;
+
+    background: #edf5ed;
+
+    color: #176b36;
+
+    font-size: 20px;
+
+    transition: all 0.3s ease;
+}
+
+.care-card:hover .care-icon {
+    background: #176b36;
+
+    color: #ffffff;
+
+    transform: translateY(-3px);
+}
+
+/* =========================================================
+   SHOP PAGE
+========================================================= */
+
+.shop-hero {
+    width: 100%;
+    min-height: 280px;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+
+    text-align: center;
+
+    background:
+        linear-gradient(
+            rgba(18, 61, 36, 0.82),
+            rgba(18, 61, 36, 0.82)
+        ),
+        url("../images/hero.jpg");
+
+    background-size: cover;
+    background-position: center;
+
+    color: white;
+}
+
+
+.shop-hero-content p {
+    font-size: 11px;
+
+    letter-spacing: 2px;
+
+    font-weight: 700;
+
+    color: #c7e2c6;
+
+    margin-bottom: 8px;
+}
+
+
+.shop-hero-content h1 {
+    font-family: "Playfair Display", serif;
+
+    font-size: 42px;
+
+    margin-bottom: 10px;
+}
+
+
+.breadcrumb {
+    font-size: 12px;
+
+    color: #dce9de;
+}
+
+
+.breadcrumb a {
+    color: white;
+
+    font-weight: 600;
+}
+
+
+
+/* =========================================================
+   SHOP SECTION
+========================================================= */
+
+.shop-section {
+
+    width: 90%;
+    max-width: 1250px;
+
+    margin: 55px auto 80px;
+}
+
+
+.shop-top {
+
+    display: flex;
+
+    align-items: flex-end;
+
+    justify-content: space-between;
+
+    margin-bottom: 30px;
+
+    border-bottom: 1px solid #e5e9e5;
+
+    padding-bottom: 20px;
+}
+
+
+.shop-top h2 {
+
+    font-family: "Playfair Display", serif;
+
+    font-size: 30px;
+
+    color: #173b25;
+}
+
+
+.shop-top p {
+
+    font-size: 12px;
+
+    color: #7c867e;
+
+    margin-top: 4px;
+}
+
+
+
+/* =========================================================
+   SORT
+========================================================= */
+
+.shop-sort {
+
+    display: flex;
+
+    align-items: center;
+
+    gap: 8px;
+}
+
+
+.shop-sort label {
+
+    font-size: 12px;
+
+    color: #68736b;
+}
+
+
+.shop-sort select {
+
+    height: 38px;
+
+    padding: 0 12px;
+
+    border: 1px solid #d9e0da;
+
+    border-radius: 5px;
+
+    background: white;
+
+    color: #29432f;
+
+    outline: none;
+
+    cursor: pointer;
+}
+
+
+
+/* =========================================================
+   PRODUCT GRID
+========================================================= */
+
+.shop-product-grid {
+
+    display: grid;
+
+    grid-template-columns:
+        repeat(4, 1fr);
+
+    gap: 22px;
+}
+
+
+.shop-product-card {
+
+    background: white;
+
+    border: 1px solid #e3e9e3;
+
+    border-radius: 10px;
+
+    overflow: hidden;
+
+    transition: 0.3s ease;
+}
+
+
+.shop-product-card:hover {
+
+    transform: translateY(-5px);
+
+    box-shadow:
+        0 12px 28px
+        rgba(20, 60, 30, 0.12);
+}
+
+
+
+/* =========================================================
+   PRODUCT IMAGE
+========================================================= */
+
+.shop-product-image {
+
+    position: relative;
+
+    width: 100%;
+
+    height: 280px;
+
+    background: #f3f6f2;
+
+    overflow: hidden;
+}
+
+
+.shop-product-image img {
+
+    width: 100%;
+    height: 100%;
+
+    object-fit: cover;
+
+    transition: 0.4s ease;
+}
+
+
+.shop-product-card:hover
+.shop-product-image img {
+
+    transform: scale(1.05);
+}
+
+
+
+/* BADGE */
+
+.shop-badge {
+
+    position: absolute;
+
+    top: 12px;
+    left: 12px;
+
+    z-index: 3;
+
+    padding: 5px 9px;
+
+    background: #176b36;
+
+    color: white;
+
+    border-radius: 4px;
+
+    font-size: 9px;
+
+    font-weight: 700;
+}
+
+
+
+/* WISHLIST */
+
+.shop-wishlist {
+
+    position: absolute;
+
+    top: 10px;
+    right: 10px;
+
+    z-index: 3;
+
+    width: 34px;
+    height: 34px;
+
+    border-radius: 50%;
+
+    border: none;
+
+    background: white;
+
+    color: #31533b;
+
+    cursor: pointer;
+
+    font-size: 15px;
+
+    box-shadow:
+        0 3px 10px rgba(0,0,0,0.08);
+}
+
+
+.shop-wishlist:hover {
+
+    color: #c54a4a;
+}
+
+
+
+/* =========================================================
+   PRODUCT INFORMATION
+========================================================= */
+
+.shop-product-info {
+
+    padding: 16px;
+}
+
+
+.shop-product-category {
+
+    font-size: 10px;
+
+    color: #7d887f;
+
+    margin-bottom: 3px;
+}
+
+
+.shop-product-info h3 {
+
+    font-size: 17px;
+
+    color: #173b25;
+
+    margin-bottom: 5px;
+}
+
+
+.shop-rating {
+
+    margin-bottom: 10px;
+}
+
+
+.shop-rating span {
+
+    color: #efa900;
+
+    font-size: 12px;
+}
+
+
+.shop-rating small {
+
+    color: #929a94;
+
+    font-size: 9px;
+}
+
+
+.shop-description {
+
+    font-size: 10px;
+
+    color: #727d75;
+
+    line-height: 1.6;
+
+    min-height: 34px;
+
+    margin-bottom: 12px;
+}
+
+
+
+/* =========================================================
+   PRODUCT BOTTOM
+========================================================= */
+
+.shop-product-bottom {
+
+    display: flex;
+
+    align-items: center;
+
+    justify-content: space-between;
+
+    border-top: 1px solid #edf0ed;
+
+    padding-top: 12px;
+}
+
+
+.shop-product-bottom strong {
+
+    font-size: 16px;
+
+    color: #173b25;
+}
+
+
+.shop-add-cart {
+
+    width: 38px;
+    height: 38px;
+
+    display: flex;
+
+    align-items: center;
+    justify-content: center;
+
+    border-radius: 6px;
+
+    background: #176b36;
+
+    color: white;
+
+    transition: 0.3s ease;
+}
+
+
+.shop-add-cart:hover {
+
+    background: #0c4f25;
+
+    transform: translateY(-2px);
+}
+
+
+
+/* =========================================================
+   NO PRODUCTS
+========================================================= */
+
+.no-products {
+
+    grid-column: 1 / -1;
+
+    text-align: center;
+
+    padding: 70px 20px;
+
+    color: #78837b;
+}
+
+
+.no-products i {
+
+    font-size: 45px;
+
+    color: #176b36;
+
+    margin-bottom: 15px;
+}
+
+
+.no-products h3 {
+
+    font-size: 20px;
+
+    color: #173b25;
+
+    margin-bottom: 5px;
+}
+
+
+
+/* =========================================================
+   SHOP RESPONSIVE
+========================================================= */
+
+@media (max-width: 1000px) {
+
+    .shop-product-grid {
+
+        grid-template-columns:
+            repeat(3, 1fr);
+    }
+
+}
+
+
+@media (max-width: 768px) {
+
+    .shop-hero {
+
+        min-height: 230px;
+    }
+
+
+    .shop-hero-content h1 {
+
+        font-size: 34px;
+    }
+
+
+    .shop-top {
+
+        flex-direction: column;
+
+        align-items: flex-start;
+
+        gap: 18px;
+    }
+
+
+    .shop-product-grid {
+
+        grid-template-columns:
+            repeat(2, 1fr);
+    }
+
+
+    .shop-product-image {
+
+        height: 250px;
+    }
+
+}
+
+
+@media (max-width: 480px) {
+
+    .shop-product-grid {
+
+        grid-template-columns: 1fr;
+    }
+
+
+    .shop-product-image {
+
+        height: 300px;
     }
 
 }
