@@ -1327,6 +1327,8 @@
     </div>
 
 </footer>
+<script src="js/cart.js?v=1"></script>
+
 <script>
 function toggleMenu() {
     const navbar = document.getElementById("navbar");

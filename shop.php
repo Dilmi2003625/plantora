@@ -1,86 +1,192 @@
-<head>
-
-    <meta charset="UTF-8">
-
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-    <title>Low-Light Plants | Plantora</title>
-
-    <link rel="stylesheet" href="css/style.css">
-
-</head>
-
 <?php
 
-$category = $_GET['category'] ?? 'all';
+require_once 'config/db.php';
 
-$plants = [
-    [
-        'name' => 'Peace Lily',
-        'category' => 'low-light',
-        'price' => 2990,
-        'image' => 'images/low-light/peace-lily.jpeg',
-        'description' => 'Beautiful indoor plant that grows well in low-light areas.',
+/* =====================================================
+   CATEGORY CONFIGURATION & MAPPING
+===================================================== */
+
+$category = $_GET['category'] ?? 'low-light';
+
+// Normalize aliases
+if ($category === 'cacti') {
+    $category = 'cacti-succulents';
+}
+
+$categoryMap = [
+    'low-light' => [
+        'id' => 1,
+        'title' => 'Low-Light Plants',
+        'badge' => 'Low Light',
+        'folder' => 'low-light',
+        'description' => 'Perfect plants for rooms with limited sunlight.',
     ],
-
-    [
-        'name' => 'Snake Plant',
-        'category' => 'low-light',
-        'price' => 2490,
-        'image' => 'images/low-light/snake-plant.jpeg',
-        'description' => 'Easy-care indoor plant suitable for low-light spaces.',
+    'air-purifying' => [
+        'id' => 2,
+        'title' => 'Air-Purifying Plants',
+        'badge' => 'Air Purifying',
+        'folder' => 'air-purifying',
+        'description' => 'Indoor plants that help improve indoor air quality.',
     ],
-
-    [
-        'name' => 'ZZ Plant',
-        'category' => 'low-light',
-        'price' => 3490,
-        'image' => 'images/low-light/zz-plant.jpeg',
-        'description' => 'Hardy indoor plant that can tolerate low-light conditions.',
+    'easy-care' => [
+        'id' => 3,
+        'title' => 'Easy-Care Plants',
+        'badge' => 'Easy Care',
+        'folder' => 'easy-care',
+        'description' => 'Low-maintenance plants suitable for beginners.',
     ],
-
-    [
-        'name' => 'Chinese Evergreen',
-        'category' => 'low-light',
-        'price' => 3290,
-        'image' => 'images/low-light/chinese-evergreen.jpeg',
-        'description' => 'Attractive foliage plant suitable for indoor spaces.',
+    'flowering' => [
+        'id' => 4,
+        'title' => 'Flowering Plants',
+        'badge' => 'Flowering',
+        'folder' => 'flowering',
+        'description' => 'Beautiful indoor plants with attractive flowers.',
     ],
-
-    [
-        'name' => 'Cast Iron Plant',
-        'category' => 'low-light',
-        'price' => 2890,
-        'image' => 'images/low-light/cast-iron.jpg',
-        'description' => 'Strong and easy-care plant for low-light environments.',
+    'foliage' => [
+        'id' => 5,
+        'title' => 'Foliage Plants',
+        'badge' => 'Foliage',
+        'folder' => 'foliage',
+        'description' => 'Decorative plants grown mainly for their beautiful leaves.',
     ],
-
-    [
-        'name' => 'Heartleaf Philodendron',
-        'category' => 'low-light',
-        'price' => 3990,
-        'image' => 'images/low-light/heartleaf-philodendron.jpeg',
-        'description' => 'Beautiful trailing plant that adapts well to indoor conditions.',
+    'cacti-succulents' => [
+        'id' => 6,
+        'title' => 'Cacti & Succulents',
+        'badge' => 'Cacti & Succulents',
+        'folder' => 'cacti-succulents',
+        'description' => 'Drought-tolerant plants that require less watering.',
     ],
 ];
 
-// Filter products
-
-if ($category !== 'all') {
-    $filteredPlants = array_filter($plants, function ($plant) use ($category) {
-        return $plant['category'] === $category;
-    });
-} else {
-    $filteredPlants = $plants;
+if (!isset($categoryMap[$category])) {
+    $category = 'low-light';
 }
 
-// Category title
+$currentCategory = $categoryMap[$category];
+$categoryId = $currentCategory['id'];
+$categoryTitle = $currentCategory['title'];
+$categoryBadge = $currentCategory['badge'];
+$categoryFolder = $currentCategory['folder'];
+$categoryDescription = $currentCategory['description'];
 
-$categoryTitle = 'Indoor Plants';
-
-if ($category === 'low-light') {
-    $categoryTitle = 'Low-Light Plants';
+// Category title from database if available
+$catStmt = mysqli_prepare($conn, 'SELECT category_name, description FROM categories WHERE category_id = ? LIMIT 1');
+if ($catStmt) {
+    mysqli_stmt_bind_param($catStmt, 'i', $categoryId);
+    mysqli_stmt_execute($catStmt);
+    $catRes = mysqli_stmt_get_result($catStmt);
+    if ($catRow = mysqli_fetch_assoc($catRes)) {
+        if (!empty($catRow['category_name'])) {
+            $categoryTitle = $catRow['category_name'];
+        }
+    }
+    mysqli_stmt_close($catStmt);
 }
+
+/* =====================================================
+   IMAGE RESOLUTION HELPER
+===================================================== */
+
+function getCategoryProductImage(string $categoryFolder, ?string $imageFilename): string
+{
+    $imageFilename = trim((string) $imageFilename);
+    if ($imageFilename === '') {
+        return 'images/logo.png';
+    }
+
+    // 1. Primary category folder
+    $primary = "images/{$categoryFolder}/{$imageFilename}";
+    if (file_exists(__DIR__ . '/' . $primary)) {
+        return $primary;
+    }
+
+    // 2. If cacti & succulents, check alternative cacti folders
+    if ($categoryFolder === 'cacti-succulents' || $categoryFolder === 'cacti') {
+        $altCacti = "images/cacti/{$imageFilename}";
+        if (file_exists(__DIR__ . '/' . $altCacti)) {
+            return $altCacti;
+        }
+        $altSucculents = "images/cacti-succulents/{$imageFilename}";
+        if (file_exists(__DIR__ . '/' . $altSucculents)) {
+            return $altSucculents;
+        }
+    }
+
+    // 3. Project products folder
+    $prodPath = "images/products/{$imageFilename}";
+    if (file_exists(__DIR__ . '/' . $prodPath)) {
+        return $prodPath;
+    }
+
+    // 4. Base images folder
+    $basePath = "images/{$imageFilename}";
+    if (file_exists(__DIR__ . '/' . $basePath)) {
+        return $basePath;
+    }
+
+    // 5. Low-light folder
+    $lowLightPath = "images/low-light/{$imageFilename}";
+    if (file_exists(__DIR__ . '/' . $lowLightPath)) {
+        return $lowLightPath;
+    }
+
+    // 6. Safe category thumbnail fallback
+    $catThumb = 'images/categories/' . str_replace('-', '_', $categoryFolder) . '.jpeg';
+    if (file_exists(__DIR__ . '/' . $catThumb)) {
+        return $catThumb;
+    }
+
+    return 'images/logo.png';
+}
+
+/* =====================================================
+   SORTING & GET PRODUCTS FROM DATABASE
+===================================================== */
+
+$sort = $_GET['sort'] ?? 'featured';
+$sortMap = [
+    'low-high' => 'starting_price ASC, p.product_id ASC',
+    'high-low' => 'starting_price DESC, p.product_id ASC',
+    'newest' => 'p.product_id DESC',
+    'featured' => 'p.product_id ASC',
+];
+$orderBy = $sortMap[$sort] ?? 'p.product_id ASC';
+
+$sql = "
+    SELECT
+        p.product_id,
+        p.product_name,
+        p.description,
+        p.care_instructions,
+        p.image,
+        MIN(pv.price) AS starting_price,
+        SUM(pv.stock_quantity) AS total_stock,
+        MIN(pv.variation_id) AS first_variation_id
+    FROM products p
+    INNER JOIN product_variations pv
+        ON p.product_id = pv.product_id
+    WHERE p.category_id = ?
+    GROUP BY
+        p.product_id,
+        p.product_name,
+        p.description,
+        p.care_instructions,
+        p.image
+    ORDER BY {$orderBy}
+";
+
+$stmt = mysqli_prepare($conn, $sql);
+
+if (!$stmt) {
+    exit('Database query preparation failed: '.mysqli_error($conn));
+}
+
+mysqli_stmt_bind_param($stmt, 'i', $categoryId);
+
+mysqli_stmt_execute($stmt);
+
+$result = mysqli_stmt_get_result($stmt);
+$productCount = mysqli_num_rows($result);
 
 ?>
 
@@ -95,22 +201,18 @@ if ($category === 'low-light') {
           content="width=device-width, initial-scale=1.0">
 
     <title>
-        <?php echo $categoryTitle; ?> | Plantora
+        <?php echo htmlspecialchars($categoryTitle); ?> | Plantora
     </title>
 
-
     <!-- Main CSS -->
-
     <link rel="stylesheet"
           href="css/style.css?v=2">
 
-
     <!-- Font Awesome -->
-
     <link rel="stylesheet"
           href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
 
-
+    <!-- Google Fonts -->
     <link rel="preconnect"
           href="https://fonts.googleapis.com">
 
@@ -148,7 +250,6 @@ if ($category === 'low-light') {
 </div>
 
 
-
 <!-- =====================================================
      HEADER
 ===================================================== -->
@@ -166,7 +267,6 @@ if ($category === 'low-light') {
     </a>
 
 
-
     <!-- NAVIGATION -->
 
     <nav class="navbar" id="navbar">
@@ -177,7 +277,6 @@ if ($category === 'low-light') {
         </a>
 
 
-
         <!-- INDOOR PLANTS -->
 
         <div class="nav-dropdown">
@@ -186,7 +285,10 @@ if ($category === 'low-light') {
                class="dropdown-title">
 
                 Indoor Plants
-                <span class="arrow">⌄</span>
+
+                <span class="arrow">
+                    ⌄
+                </span>
 
             </a>
 
@@ -202,7 +304,7 @@ if ($category === 'low-light') {
                 </a>
 
                 <a href="shop.php?category=easy-care">
-                    🪴 Easy-Care Plants
+                    🌱 Easy-Care Plants
                 </a>
 
                 <a href="shop.php?category=flowering">
@@ -210,7 +312,7 @@ if ($category === 'low-light') {
                 </a>
 
                 <a href="shop.php?category=foliage">
-                    🍃 Foliage Plants
+                    🌿 Foliage Plants
                 </a>
 
                 <a href="shop.php?category=cacti-succulents">
@@ -222,7 +324,6 @@ if ($category === 'low-light') {
         </div>
 
 
-
         <!-- POTS -->
 
         <div class="nav-dropdown">
@@ -231,7 +332,10 @@ if ($category === 'low-light') {
                class="dropdown-title">
 
                 Pots
-                <span class="arrow">⌄</span>
+
+                <span class="arrow">
+                    ⌄
+                </span>
 
             </a>
 
@@ -263,21 +367,28 @@ if ($category === 'low-light') {
         </div>
 
 
+        <!-- GIFT PACKAGES -->
 
         <a href="shop.php?category=packages">
             Gift Packages
         </a>
 
 
+        <!-- CARE -->
+
         <a href="care.php">
             Care & Tips
         </a>
 
 
+        <!-- ABOUT -->
+
         <a href="about.php">
             About Us
         </a>
 
+
+        <!-- CONTACT -->
 
         <a href="contact.php">
             Contact Us
@@ -286,11 +397,12 @@ if ($category === 'low-light') {
     </nav>
 
 
-
     <!-- HEADER ACTIONS -->
 
     <div class="header-actions">
 
+
+        <!-- SEARCH -->
 
         <div class="search-box">
 
@@ -298,20 +410,27 @@ if ($category === 'low-light') {
                    placeholder="Search plants...">
 
             <button type="button">
+
                 <i class="fa-solid fa-magnifying-glass"></i>
+
             </button>
 
         </div>
 
 
+        <!-- LOGIN -->
+
         <a href="login.php"
            class="login-link">
 
             <i class="fa-regular fa-user"></i>
+
             Login
 
         </a>
 
+
+        <!-- CART -->
 
         <a href="cart.php"
            class="cart-link">
@@ -329,7 +448,6 @@ if ($category === 'low-light') {
 </header>
 
 
-
 <!-- =====================================================
      PAGE HERO
 ===================================================== -->
@@ -343,7 +461,7 @@ if ($category === 'low-light') {
         </p>
 
         <h1>
-            <?php echo $categoryTitle; ?>
+            <?php echo htmlspecialchars($categoryTitle); ?>
         </h1>
 
         <div class="breadcrumb">
@@ -352,18 +470,22 @@ if ($category === 'low-light') {
                 Home
             </a>
 
-            <span> / </span>
+            <span>
+                /
+            </span>
 
             <span>
                 Indoor Plants
             </span>
 
-            <?php if ($category === 'low-light') { ?>
-
-                <span> / </span>
+            <?php if ($category !== 'all') { ?>
 
                 <span>
-                    Low-Light Plants
+                    /
+                </span>
+
+                <span>
+                    <?php echo htmlspecialchars($categoryTitle); ?>
                 </span>
 
             <?php } ?>
@@ -373,7 +495,6 @@ if ($category === 'low-light') {
     </div>
 
 </section>
-
 
 
 <!-- =====================================================
@@ -387,19 +508,24 @@ if ($category === 'low-light') {
 
     <div class="shop-top">
 
-
         <div>
 
             <h2>
-                Low-Light Plants
+                <?php echo htmlspecialchars($categoryTitle); ?>
             </h2>
 
             <p>
-                Perfect plants for rooms with limited sunlight.
+                <?php echo htmlspecialchars($categoryDescription); ?>
             </p>
+
+            <span class="shop-product-count" style="display:inline-block; margin-top:8px; font-size:12px; font-weight:600; color:#176b36; background:#eaf5ec; padding:4px 12px; border-radius:15px; border:1px solid #d4ebd7;">
+                <i class="fa-solid fa-leaf" style="font-size:11px; margin-right:5px;"></i><?php echo $productCount; ?> <?php echo $productCount === 1 ? 'plant' : 'plants'; ?> available
+            </span>
 
         </div>
 
+
+        <!-- SORT -->
 
         <div class="shop-sort">
 
@@ -409,19 +535,19 @@ if ($category === 'low-light') {
 
             <select id="sort">
 
-                <option>
+                <option value="featured" <?php echo $sort === 'featured' ? 'selected' : ''; ?>>
                     Featured
                 </option>
 
-                <option>
+                <option value="low-high" <?php echo $sort === 'low-high' ? 'selected' : ''; ?>>
                     Price: Low to High
                 </option>
 
-                <option>
+                <option value="high-low" <?php echo $sort === 'high-low' ? 'selected' : ''; ?>>
                     Price: High to Low
                 </option>
 
-                <option>
+                <option value="newest" <?php echo $sort === 'newest' ? 'selected' : ''; ?>>
                     Newest
                 </option>
 
@@ -432,17 +558,22 @@ if ($category === 'low-light') {
     </div>
 
 
-
-    <!-- PRODUCTS -->
+    <!-- =================================================
+         PRODUCTS
+    ================================================= -->
 
     <div class="shop-product-grid">
 
 
-        <?php if (count($filteredPlants) > 0) { ?>
+        <?php if ($productCount > 0) { ?>
 
 
-            <?php foreach ($filteredPlants as $plant) { ?>
+            <?php while ($plant = mysqli_fetch_assoc($result)) {
+                $plantImg = getCategoryProductImage($categoryFolder, $plant['image']);
+            ?>
 
+
+                <!-- PRODUCT CARD -->
 
                 <div class="shop-product-card">
 
@@ -451,23 +582,34 @@ if ($category === 'low-light') {
 
                     <div class="shop-product-image">
 
+
                         <span class="shop-badge">
-                            Low Light
+                            <?php echo htmlspecialchars($categoryBadge); ?>
                         </span>
 
 
-                        <button class="shop-wishlist">
+                        <button class="shop-wishlist"
+                                type="button"
+                                aria-label="Add to wishlist">
+
                             <i class="fa-regular fa-heart"></i>
+
                         </button>
 
 
-                        <img
-                            src="<?php echo $plant['image']; ?>"
-                            alt="<?php echo $plant['name']; ?>"
-                        >
+                        <a href="product-details.php?id=<?php echo (int) $plant['product_id']; ?>"
+                           class="shop-product-image-link"
+                           aria-label="View <?php echo htmlspecialchars($plant['product_name']); ?> details">
+
+                            <img
+                                src="<?php echo htmlspecialchars($plantImg); ?>"
+                                alt="<?php echo htmlspecialchars($plant['product_name']); ?>"
+                                onerror="this.onerror=null;this.src='images/logo.png';"
+                            >
+
+                        </a>
 
                     </div>
-
 
 
                     <!-- DETAILS -->
@@ -481,9 +623,13 @@ if ($category === 'low-light') {
 
 
                         <h3>
-                            <?php echo $plant['name']; ?>
+                            <a href="product-details.php?id=<?php echo (int) $plant['product_id']; ?>">
+                                <?php echo htmlspecialchars($plant['product_name']); ?>
+                            </a>
                         </h3>
 
+
+                        <!-- RATING -->
 
                         <div class="shop-rating">
 
@@ -498,32 +644,67 @@ if ($category === 'low-light') {
                         </div>
 
 
+                        <!-- DESCRIPTION -->
+
                         <p class="shop-description">
 
-                            <?php echo $plant['description']; ?>
+                            <?php echo htmlspecialchars($plant['description']); ?>
 
                         </p>
 
+
+                        <!-- PRODUCT BOTTOM -->
 
                         <div class="shop-product-bottom">
 
 
                             <strong>
 
-                                Rs.
-                                <?php echo number_format($plant['price']); ?>
+                                From Rs.
+                                <?php echo number_format(
+                                    (float) $plant['starting_price'],
+                                    2
+                                ); ?>
 
                             </strong>
 
 
-                            <a href="cart.php"
-                               class="shop-add-cart">
+                            <!-- ADD TO CART -->
+
+                            <button type="button"
+                                    class="shop-add-cart"
+                                    title="Add to Cart"
+                                    aria-label="Add <?php echo htmlspecialchars($plant['product_name']); ?> to cart"
+                                    data-product="<?php echo htmlspecialchars(json_encode([
+                                        'product_id' => (int) $plant['product_id'],
+                                        'variation_id' => (int) $plant['first_variation_id'],
+                                        'product_name' => $plant['product_name'],
+                                        'price' => (float) $plant['starting_price']
+                                    ], JSON_HEX_TAG | JSON_HEX_AMP | JSON_HEX_APOS | JSON_HEX_QUOT), ENT_QUOTES, 'UTF-8'); ?>">
 
                                 <i class="fa-solid fa-cart-plus"></i>
 
-                            </a>
+                            </button>
 
                         </div>
+
+
+                        <!-- STOCK -->
+
+                        <?php if ((int) $plant['total_stock'] > 0) { ?>
+
+                            <small class="stock-available">
+                                In Stock
+                            </small>
+
+                        <?php } else { ?>
+
+                            <small class="stock-out">
+                                Out of Stock
+                            </small>
+
+                        <?php } ?>
+
 
                     </div>
 
@@ -536,6 +717,8 @@ if ($category === 'low-light') {
         <?php } else { ?>
 
 
+            <!-- NO PRODUCTS -->
+
             <div class="no-products">
 
                 <i class="fa-solid fa-leaf"></i>
@@ -545,8 +728,12 @@ if ($category === 'low-light') {
                 </h3>
 
                 <p>
-                    There are currently no plants in this category.
+                    No products are available in this category yet.
                 </p>
+
+                <a href="shop.php">
+                    View All Plants
+                </a>
 
             </div>
 
@@ -559,7 +746,6 @@ if ($category === 'low-light') {
 </section>
 
 
-
 <!-- =====================================================
      FOOTER
 ===================================================== -->
@@ -567,13 +753,19 @@ if ($category === 'low-light') {
 <footer class="footer">
 
 
+    <!-- WATERMARK -->
+
     <div class="footer-leaf watermark">
+
         <i class="fa-solid fa-leaf"></i>
+
     </div>
 
 
     <div class="footer-grid">
 
+
+        <!-- BRAND -->
 
         <div class="footer-brand">
 
@@ -582,7 +774,6 @@ if ($category === 'low-light') {
                 alt="Plantora Logo"
                 class="footer-logo"
             >
-
 
             <p>
                 Beautiful indoor plants, stylish pots
@@ -593,6 +784,7 @@ if ($category === 'low-light') {
         </div>
 
 
+        <!-- QUICK LINKS -->
 
         <div class="footer-column">
 
@@ -619,6 +811,7 @@ if ($category === 'low-light') {
         </div>
 
 
+        <!-- CUSTOMER SERVICE -->
 
         <div class="footer-column">
 
@@ -645,6 +838,7 @@ if ($category === 'low-light') {
         </div>
 
 
+        <!-- CONTACT -->
 
         <div class="footer-column">
 
@@ -669,6 +863,8 @@ if ($category === 'low-light') {
     </div>
 
 
+    <!-- FOOTER BOTTOM -->
+
     <div class="footer-bottom">
 
         <p>
@@ -682,6 +878,39 @@ if ($category === 'low-light') {
     </div>
 
 </footer>
+
+
+<!-- =====================================================
+     JAVASCRIPT
+===================================================== -->
+
+<script src="js/cart.js?v=1"></script>
+
+<script>
+
+document.addEventListener("DOMContentLoaded", function () {
+
+    const sortSelect = document.getElementById("sort");
+
+    if (sortSelect) {
+
+        sortSelect.addEventListener("change", function () {
+
+            const selectedValue = this.value;
+
+            const currentUrl = new URL(window.location.href);
+
+            currentUrl.searchParams.set("sort", selectedValue);
+
+            window.location.href = currentUrl.toString();
+
+        });
+
+    }
+
+});
+
+</script>
 
 
 </body>
