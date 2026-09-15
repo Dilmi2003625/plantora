@@ -3,6 +3,13 @@
 
     const storageKey = 'plantora_cart';
 
+    // Check if user just logged out, clear cart immediately
+    if (window.location.search.indexOf('logged_out=1') !== -1) {
+        try {
+            localStorage.removeItem(storageKey);
+        } catch (e) {}
+    }
+
     function readCart() {
         try {
             const cart = JSON.parse(localStorage.getItem(storageKey));
@@ -12,13 +19,19 @@
         }
     }
 
-    function saveCart(cart) {
-        localStorage.setItem(storageKey, JSON.stringify(cart));
+    function saveCart(cart, syncDb = true) {
+        try {
+            localStorage.setItem(storageKey, JSON.stringify(cart));
+        } catch (e) {}
+
+        if (syncDb) {
+            syncCartWithServer(cart);
+        }
     }
 
     function updateCartCounters() {
         const totalItems = readCart().reduce(function (total, item) {
-            return total + item.quantity;
+            return total + (parseInt(item.quantity, 10) || 1);
         }, 0);
 
         document.querySelectorAll('.cart-count').forEach(function (counter) {
@@ -45,40 +58,138 @@
         }, 2400);
     }
 
+    function syncCartWithServer(cart) {
+        // Send cart state to server for logged-in user
+        fetch('cart-sync.php?action=sync', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'X-Requested-With': 'XMLHttpRequest'
+            },
+            body: JSON.stringify({ items: cart })
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data && data.logged_in && Array.isArray(data.cart)) {
+                // Keep local updated if server adjusted quantities
+            }
+        })
+        .catch(function() {
+            // Offline or guest, local storage remains authoritative
+        });
+    }
+
+    function initializeCartSession() {
+        // Query server to check if user is logged in and sync database cart
+        fetch('cart-sync.php?action=get', {
+            headers: { 'X-Requested-With': 'XMLHttpRequest' }
+        })
+        .then(function(res) { return res.json(); })
+        .then(function(data) {
+            if (data && data.logged_in) {
+                const localCart = readCart();
+                // If local cart has items, merge them into server
+                if (localCart.length > 0) {
+                    fetch('cart-sync.php?action=merge', {
+                        method: 'POST',
+                        headers: {
+                            'Content-Type': 'application/json',
+                            'X-Requested-With': 'XMLHttpRequest'
+                        },
+                        body: JSON.stringify({ items: localCart })
+                    })
+                    .then(function(r) { return r.json(); })
+                    .then(function(mergedData) {
+                        if (mergedData && Array.isArray(mergedData.cart)) {
+                            localStorage.setItem(storageKey, JSON.stringify(mergedData.cart));
+                            updateCartCounters();
+                            if (typeof window.renderCartPage === 'function') {
+                                window.renderCartPage();
+                            }
+                        }
+                    });
+                } else if (Array.isArray(data.cart)) {
+                    // Load user's database cart into client
+                    localStorage.setItem(storageKey, JSON.stringify(data.cart));
+                    updateCartCounters();
+                    if (typeof window.renderCartPage === 'function') {
+                        window.renderCartPage();
+                    }
+                }
+            }
+        })
+        .catch(function() {});
+    }
+
     function bindAddToCartButtons() {
         document.querySelectorAll('.shop-add-cart[data-product]').forEach(function (button) {
             button.addEventListener('click', function (event) {
                 event.stopPropagation();
-                addToCart(JSON.parse(button.dataset.product));
+                try {
+                    addToCart(JSON.parse(button.dataset.product));
+                } catch (err) {
+                    console.error('Invalid product dataset:', err);
+                }
             });
         });
     }
 
+    window.readCart = readCart;
+    window.saveCart = saveCart;
+    window.updateCartCounters = updateCartCounters;
+    window.showToast = showToast;
+
     window.addToCart = function (product) {
+        if (!product || !product.variation_id) {
+            return;
+        }
+
         const cart = readCart();
+        const targetVariationId = Number(product.variation_id);
         const existingItem = cart.find(function (item) {
-            return item.variation_id === product.variation_id;
+            return Number(item.variation_id) === targetVariationId;
         });
 
+        const addQty = Math.max(1, parseInt(product.quantity, 10) || 1);
+        const itemSize = product.size || product.selected_size || '';
+        const itemColor = product.color || '';
+        const itemCategory = product.category || '';
+
         if (existingItem) {
-            existingItem.quantity += 1;
+            existingItem.quantity += addQty;
+            if (itemSize && !existingItem.size) {
+                existingItem.size = itemSize;
+            }
+            if (itemColor && !existingItem.color) {
+                existingItem.color = itemColor;
+            }
+            if (product.image && !existingItem.image) {
+                existingItem.image = product.image;
+            }
         } else {
             cart.push({
-                product_id: product.product_id,
-                variation_id: product.variation_id,
-                product_name: product.product_name,
-                price: product.price,
-                quantity: 1
+                product_id: Number(product.product_id),
+                variation_id: targetVariationId,
+                product_name: product.product_name || '',
+                category: itemCategory,
+                color: itemColor,
+                size: itemSize,
+                price: Number(product.price) || 0,
+                quantity: addQty,
+                image: product.image || ''
             });
         }
 
-        saveCart(cart);
+        saveCart(cart, true);
         updateCartCounters();
-        showToast('Item added to cart');
+        const colorLabel = itemColor ? ' - ' + itemColor : '';
+        const sizeLabel = itemSize ? ' - ' + itemSize : '';
+        showToast((product.product_name || 'Item') + colorLabel + sizeLabel + ' added to cart');
     };
 
     document.addEventListener('DOMContentLoaded', function () {
         updateCartCounters();
         bindAddToCartButtons();
+        initializeCartSession();
     });
 })();

@@ -1,23 +1,45 @@
-<nav class="navbar">
+<?php
+/**
+ * Plantora E-Commerce
+ * Navigation Bar Component
+ * File: includes/navbar.php
+ */
+$currentScript = basename($_SERVER['PHP_SELF'] ?? '');
+?>
+<nav class="navbar" id="navbar">
+    <a href="index.php" class="<?php echo ($currentScript === 'index.php') ? 'active' : ''; ?>">Home</a>
 
-    <div class="logo">
-        🌿 Plantora
+    <!-- INDOOR PLANTS DROPDOWN -->
+    <div class="nav-dropdown">
+        <a href="shop.php" class="dropdown-title <?php echo ($currentScript === 'shop.php' && empty($_GET['category'])) ? 'active' : ''; ?>">
+            Indoor Plants <span class="arrow">⌄</span>
+        </a>
+        <div class="dropdown-menu">
+            <a href="shop.php?category=low-light">🌿 Low-Light Plants</a>
+            <a href="shop.php?category=air-purifying">🌱 Air-Purifying Plants</a>
+            <a href="shop.php?category=easy-care">🪴 Easy-Care Plants</a>
+            <a href="shop.php?category=flowering">🌸 Flowering Plants</a>
+            <a href="shop.php?category=foliage">🍃 Foliage Plants</a>
+            <a href="shop.php?category=cacti-succulents">🌵 Cacti & Succulents</a>
+        </div>
     </div>
 
-    <ul class="nav-links">
-        <li><a href="/plantora/index.php">Home</a></li>
+    <!-- POTS DROPDOWN -->
+    <div class="nav-dropdown">
+        <a href="shop.php?category=pots" class="dropdown-title">
+            Pots <span class="arrow">⌄</span>
+        </a>
+        <div class="dropdown-menu">
+            <a href="shop.php?category=plastic-pots">🪴 Plastic Pots</a>
+            <a href="shop.php?category=terracotta-clay">🏺 Terracotta & Clay Pots</a>
+            <a href="shop.php?category=glazed-ceramic">🏺 Glazed Ceramic Pots</a>
+            <a href="shop.php?category=fiberglass-fiber-clay">🪴 Fiberglass & Fiber Clay</a>
+            <a href="shop.php?category=cement-stone">🪨 Cement & Stone</a>
+        </div>
+    </div>
 
-        <li><a href="/plantora/pages/shop.php">Shop</a></li>
-
-        <li><a href="/plantora/pages/offers.php">Special Offers</a></li>
-
-        <li><a href="/plantora/pages/packages.php">Packages</a></li>
-
-        <li><a href="/plantora/pages/pots.php">Pots</a></li>
-
-        <li><a href="/plantora/pages/cart.php">🛒 Cart</a></li>
-
-        <li><a href="/plantora/pages/login.php">Login</a></li>
-    </ul>
-
+    <a href="shop.php?category=packages">Gift Packages</a>
+    <a href="care.php">Care & Tips</a>
+    <a href="about.php">About Us</a>
+    <a href="contact.php">Contact Us</a>
 </nav>

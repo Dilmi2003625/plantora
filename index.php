@@ -1,3 +1,7 @@
+<?php
+require_once __DIR__ . '/config/db.php';
+require_once __DIR__ . '/includes/auth.php';
+?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -118,11 +122,11 @@
             🪴 Plastic Pots
         </a>
 
-        <a href="shop.php?category=terracotta-clay-pots">
+        <a href="shop.php?category=terracotta-clay">
             🏺 Terracotta & Clay Pots
         </a>
 
-        <a href="shop.php?category=glazed-ceramic-pots">
+        <a href="shop.php?category=glazed-ceramic">
             🏺 Glazed Ceramic Pots
         </a>
 
@@ -158,40 +162,7 @@
 
 
     <!-- SEARCH + LOGIN + CART -->
-
-    <div class="header-actions">
-
-        <div class="search-box">
-
-            <input
-                type="text"
-                placeholder="Search plants..."
-            >
-
-            <button type="button">
-                🔍
-            </button>
-
-        </div>
-
-
-        <a href="login.php" class="login-link">
-            ♙ Login
-        </a>
-
-
-        <a href="cart.php" class="cart-link">
-
-            🛒
-
-            <span class="cart-count">
-                0
-            </span>
-
-        </a>
-
-    </div>
-
+    <?php include __DIR__ . '/includes/header_actions.php'; ?>
 </header>
 
 
