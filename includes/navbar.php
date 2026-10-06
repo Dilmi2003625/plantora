@@ -42,4 +42,7 @@ $currentScript = basename($_SERVER['PHP_SELF'] ?? '');
     <a href="care.php">Care & Tips</a>
     <a href="about.php">About Us</a>
     <a href="contact.php">Contact Us</a>
+    <?php if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin'): ?>
+        <a href="admin/index.php" style="color: #c0392b; font-weight: bold;">Admin Panel</a>
+    <?php endif; ?>
 </nav>

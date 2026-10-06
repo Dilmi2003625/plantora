@@ -64,7 +64,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
                 // Redirect to intended page or index.php
                 $destination = 'index.php';
-                if (!empty($postedReturnUrl)) {
+                
+                // Admin users are always redirected to the admin dashboard
+                if (isset($_SESSION['user_role']) && $_SESSION['user_role'] === 'admin') {
+                    $destination = 'admin/index.php';
+                } elseif (!empty($postedReturnUrl)) {
                     $parsed = parse_url($postedReturnUrl);
                     $cleanPath = basename($parsed['path'] ?? '');
                     if (!empty($cleanPath) && strpos($cleanPath, 'login.php') === false && strpos($cleanPath, 'register.php') === false) {
