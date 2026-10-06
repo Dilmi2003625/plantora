@@ -698,13 +698,14 @@ if (productSelectionForm) {
         const currentColor = isPot && colorInput ? colorInput.value : '';
         const currentImage = (isPot && currentColor && colorImages[currentColor]) ? colorImages[currentColor] : (mainProductImage ? mainProductImage.getAttribute('src') : <?php echo json_encode($productImage); ?>);
 
+        event.preventDefault();
+
         if (!varId || addButton.disabled) {
-            event.preventDefault();
             return;
         }
 
         if (typeof window.addToCart === 'function') {
-            event.preventDefault();
+            addButton.disabled = true;
             window.addToCart({
                 product_id: <?php echo (int) $product['product_id']; ?>,
                 variation_id: varId,
@@ -716,6 +717,8 @@ if (productSelectionForm) {
                 quantity: qty,
                 image: currentImage
             });
+
+            setTimeout(function() { addButton.disabled = false; }, 1000);
 
             let msg = document.querySelector('.cart-form-message.success');
             if (!msg) {

@@ -371,9 +371,9 @@ const isUserLoggedIn = <?php echo isLoggedIn() ? 'true' : 'false'; ?>;
 function handleCheckout() {
     if (!isUserLoggedIn) {
         alert('Please log in to your Plantora account to proceed to checkout.');
-        window.location.href = 'login.php?return_url=cart.php';
+        window.location.href = 'login.php?return_url=checkout.php';
     } else {
-        alert('Thank you, ' + <?php echo json_encode($_SESSION['user_name'] ?? 'Customer'); ?> + '! Your order checkout is ready.');
+        window.location.href = 'checkout.php';
     }
 }
 

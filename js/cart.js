@@ -88,27 +88,7 @@
         .then(function(data) {
             if (data && data.logged_in) {
                 const localCart = readCart();
-                // If local cart has items, merge them into server
-                if (localCart.length > 0) {
-                    fetch('cart-sync.php?action=merge', {
-                        method: 'POST',
-                        headers: {
-                            'Content-Type': 'application/json',
-                            'X-Requested-With': 'XMLHttpRequest'
-                        },
-                        body: JSON.stringify({ items: localCart })
-                    })
-                    .then(function(r) { return r.json(); })
-                    .then(function(mergedData) {
-                        if (mergedData && Array.isArray(mergedData.cart)) {
-                            localStorage.setItem(storageKey, JSON.stringify(mergedData.cart));
-                            updateCartCounters();
-                            if (typeof window.renderCartPage === 'function') {
-                                window.renderCartPage();
-                            }
-                        }
-                    });
-                } else if (Array.isArray(data.cart)) {
+                if (Array.isArray(data.cart)) {
                     // Load user's database cart into client
                     localStorage.setItem(storageKey, JSON.stringify(data.cart));
                     updateCartCounters();
@@ -123,10 +103,18 @@
 
     function bindAddToCartButtons() {
         document.querySelectorAll('.shop-add-cart[data-product]').forEach(function (button) {
+            if (button.dataset.bound) return;
+            button.dataset.bound = 'true';
             button.addEventListener('click', function (event) {
+                event.preventDefault();
                 event.stopPropagation();
+                
+                if (button.disabled) return;
+                
                 try {
                     addToCart(JSON.parse(button.dataset.product));
+                    button.disabled = true;
+                    setTimeout(function() { button.disabled = false; }, 1000);
                 } catch (err) {
                     console.error('Invalid product dataset:', err);
                 }
